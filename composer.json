@@ -1,0 +1,16 @@
+{
+  "name": "guodaolinyi/zfjwsys",
+  "authors": [
+    {
+      "name": "guodaolinyi",
+      "email": "1397871454@qq.com"
+    }
+  ],
+  "psr-4": {
+    "App\\": "tools/"
+  },
+  "files": [
+    "function.php",
+    "config.php"
+  ]
+}
