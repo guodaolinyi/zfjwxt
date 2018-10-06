@@ -6,6 +6,7 @@
       "email": "1397871454@qq.com"
     }
   ],
+  "license":"MIT",
   "psr-4": {
     "App\\": "tools/"
   },
