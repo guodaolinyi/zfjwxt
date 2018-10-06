@@ -6,4 +6,4 @@
  * Time: 11:16
  */
 define("jwsysUrl", "http://ems.bjwlxy.cn");
-define("verifyCodePath", __DIR__ . "../../../storage/verifycode");
+define("verifyCodePath", storage_path() . "/verifycode");

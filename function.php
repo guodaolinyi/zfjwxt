@@ -171,3 +171,15 @@ function del_dir($path)
         }
     }
 }
+
+/*
+ * xpath操作
+ * */
+function dom_xpath($file_path, $path_query)
+{
+    $dom = new DOMDocument();
+    @$dom->loadHTMLFile($file_path);
+    $xpath = new DOMXPath($dom);
+    $dls = $xpath->query($path_query);
+    return $dls;
+}
