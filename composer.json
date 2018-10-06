@@ -9,6 +9,9 @@
   "psr-4": {
     "App\\": "tools/"
   },
+  "require": {
+    "php": ">=5.6"
+  },
   "files": [
     "function.php",
     "config.php"
