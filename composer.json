@@ -1,5 +1,6 @@
 {
   "name": "guodaolinyi/zfjwsys",
+  "description":"基于PHP Curl 查询正方教务系统信息的类库",
   "authors": [
     {
       "name": "guodaolinyi",
@@ -8,7 +9,7 @@
   ],
   "license": "MIT",
   "psr-4": {
-    "App\\": "tools/"
+    "zfjwsys\\": "tools/"
   },
   "require": {
     "php": ">=5.6",
