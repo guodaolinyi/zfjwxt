@@ -31,6 +31,8 @@ class BaseSnail
     protected $captcha;
     //姓名
     protected $name;
+    //VIEWSTATE
+    protected $viewstate;
 
     function __construct()
     {
@@ -55,11 +57,11 @@ class BaseSnail
         }
         $app = new IndexController();
         $captcha = $app->entrance($imgPath, 'local');
-        $this->studentcode = 201696094025;
-        $this->password = 'agmt.13579';
+        $this->studentcode = 201696094003;
+        $this->password = 'MMQ846834650';
         $this->captcha = $captcha;
-        $viewstate = $this->viewstate();
-        $this->name($viewstate);
+        $this->viewstate = $this->viewstate();
+        if (empty($this->viewstate)) exit(json_encode(['code' => '200', 'error' => '教务系统出错了!']));
     }
 
     //获取教务系统登录时隐藏表单viewstate信息
@@ -95,7 +97,7 @@ class BaseSnail
         $result = curl_request($curlArg);
         $this->error(strip_tags($result));
         preg_match('/<span id=\"xhxm\">(.*)<\/span>/', $result, $name);
-        $this->name = mb_substr($name[1], 0, -2, 'utf8');
+        $this->name = mb_substr($name[1], 0, -2, 'gb2312');
         return $this->name;
     }
 
@@ -106,7 +108,7 @@ class BaseSnail
         if (empty($error[1])) {
             return true;
         }
-        switch (gb2312($error[1])) {
+        switch ($this->to_utf8($error[1])) {
             case "('用户名不存在或未按照要求参加教学活动！！')":
                 exit(json_encode(['code' => '300', 'error' => '用户名不存在或未按照要求参加教学活动！']));
             case "('验证码不正确！！')":
@@ -116,5 +118,19 @@ class BaseSnail
             default:
                 return true;
         }
+    }
+
+    //字符编码转换
+    protected function to_utf8($sArg = '')
+    {
+        $string = iconv('gb2312', 'utf-8', $sArg);
+        return $string;
+    }
+
+    //字符编码转换
+    protected function to_gb2312($sArg = '')
+    {
+        $string = iconv('utf-8', 'gb2312', $sArg);
+        return $string;
     }
 }
