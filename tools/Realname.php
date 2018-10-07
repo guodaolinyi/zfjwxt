@@ -12,7 +12,7 @@ use zfjwsys\tools\BaseSnail;
 
 class Realname extends BaseSnail
 {
-    public function check_name($studentcode, $password)
+    public function realname($studentcode, $password)
     {
         $this->studentcode = $studentcode;
         $this->password = $password;
