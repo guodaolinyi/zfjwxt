@@ -8,8 +8,11 @@
 
 namespace zfjwsys\tools;
 
-use zfjwsys\tools\BaseSnail;
-
 class TurboSnail extends BaseSnail
 {
+    function __construct()
+    {
+        parent::__construct();
+        $this->name=$this->name($this->viewstate);
+    }
 }

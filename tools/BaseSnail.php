@@ -57,11 +57,17 @@ class BaseSnail
         }
         $app = new IndexController();
         $captcha = $app->entrance($imgPath, 'local');
-        $this->studentcode = 201696094003;
-        $this->password = 'MMQ846834650';
+        //$this->studentcode = 201696094003;
+        //$this->password = 'MMQ846834650';
+        //$this->studentcode = 201696094025;
+        //$this->password = 'agmt.13579';
+        //$this->studentcode = '201796094115';
+        //$this->password = 'nh.970821';
+        //$this->studentcode = '201796094102';
+        //$this->password = 'xbh2939..';
         $this->captcha = $captcha;
         $this->viewstate = $this->viewstate();
-        if (empty($this->viewstate)) exit(json_encode(['code' => '200', 'error' => '教务系统出错了!']));
+        if (empty($this->viewstate)) exit(json_encode(['code' => '200', 'error' => '网络状态异常!']));
     }
 
     //获取教务系统登录时隐藏表单viewstate信息
@@ -97,8 +103,7 @@ class BaseSnail
         $result = curl_request($curlArg);
         $this->error(strip_tags($result));
         preg_match('/<span id=\"xhxm\">(.*)<\/span>/', $result, $name);
-        $this->name = mb_substr($name[1], 0, -2, 'gb2312');
-        return $this->name;
+        return $realname = mb_substr($name[1], 0, -2, 'gb2312');
     }
 
     //处理错误信息

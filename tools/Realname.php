@@ -8,16 +8,13 @@
 
 namespace zfjwsys\tools;
 
-use zfjwsys\tools\BaseSnail;
-
 class Realname extends BaseSnail
 {
     public function realname($studentcode, $password)
     {
         $this->studentcode = $studentcode;
         $this->password = $password;
-        $temp = $this->name = $this->name($this->viewstate);
-        $realname = $this->to_utf8($temp);
+        $realname = $this->to_utf8($this->name($this->viewstate));
         return $realname;
     }
 }

@@ -175,11 +175,18 @@ function del_dir($path)
 /*
  * xpath操作
  * */
-function dom_xpath($file_path, $path_query)
+function dom_xpath($file_content, $xpath_query)
 {
-    $dom = new DOMDocument();
-    @$dom->loadHTMLFile($file_path);
+    $table = array();
+    $dom = new DOMDocument;
+    @$dom->loadHTML($file_content);
     $xpath = new DOMXPath($dom);
-    $dls = $xpath->query($path_query);
-    return $dls;
+    $dls = $xpath->query($xpath_query);
+    foreach ($dls as $i => $dl) {
+        $spans = $dl->childNodes;
+        foreach ($spans as $j => $span) {
+            $table[$i][$j] = $span->textContent;
+        }
+    }
+    return $table;
 }
