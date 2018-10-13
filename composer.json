@@ -13,7 +13,7 @@
   },
   "require": {
     "php": ">=5.6",
-    "guodaolinyi/captcha-reader": "1.0"
+    "guodaolinyi/captcha-reader": "1.0.0"
   },
   "files": [
     "function.php",
