@@ -5,5 +5,6 @@
  * Date: 2018-10-06
  * Time: 11:16
  */
+define("yktUrl", "http://yktcx.bjwlxy.cn");
 define("jwsysUrl", "http://ems.bjwlxy.cn");
 define("verifyCodePath", storage_path() . "/verifycode");
