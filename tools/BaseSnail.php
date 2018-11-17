@@ -115,11 +115,11 @@ class BaseSnail
         }
         switch ($this->to_utf8($error[1])) {
             case "('用户名不存在或未按照要求参加教学活动！！')":
-                exit(json_encode(['code' => '300', 'error' => '用户名不存在或未按照要求参加教学活动！']));
+                exit(300);  //用户名不存在或未按照要求参加教学活动
             case "('验证码不正确！！')":
-                exit(json_encode(['code' => '400', 'error' => '验证码不正确！']));
+                exit(400);  //验证码不正确
             case "('密码错误！！')":
-                exit(json_encode(['code' => '500', 'error' => '密码错误！']));
+                exit(500);  //用户名或密码不正确
             default:
                 return true;
         }
