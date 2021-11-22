@@ -1,23 +1,27 @@
-###正方教务系统信息抓取包(zfjwsys)
+### 正方教务系统信息爬虫
 
->本人使用环境
+#### 使用场景
+
+之前开发了一款校园APP，为了集成教务系统的查询功能，写了一套能够爬取成绩及课表的爬虫。
+
+> 本人使用环境
 
 * PHP 7.0.10
 * MySQL 5.7
 * Apache 2.4
 * Laravel 5.5
 
-####获取方式
+#### 获取方式
 
-#####composer方式
+##### composer方式
 
->composer require guodaolinyi/zfjwsys
+> composer require guodaolinyi/zfjwxt
 
-#####git方式
+##### git方式
 
->https://git.coding.net/guodaolinyi/zfjwsys.git
+> https://github.com/guodaolinyi/zfjwxt.git
 
-#####使用方法
+##### 使用方法
 
 ```
 <?php
@@ -34,7 +38,7 @@ class YourController extends Controller
 }
 ```
 
-#####Ex.
+##### Ex.
 
 ```
 实名认证:教务系统查询姓名
