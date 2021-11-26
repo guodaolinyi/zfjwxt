@@ -6,10 +6,7 @@
 
 > 本人使用环境
 
-* PHP 7.0.10
-* MySQL 5.7
-* Apache 2.4
-* Laravel 5.5
+* PHP 7.3.4
 
 #### 获取方式
 
@@ -21,18 +18,37 @@
 
 > https://github.com/guodaolinyi/zfjwxt.git
 
+##### 实现功能
+
+* 校园一卡通
+
+| 功能 | 进度 | 备注 |
+|---|---|---|
+| 余额查询 | 已完成 | |
+| 挂失 | | |
+
+* 教务系统
+
+| 功能 | 进度 | 备注 |
+|---|---|---|
+| 课表查询 | 开发中 | |
+| 四六级成绩查询 | 开发中 | |
+
 ##### 使用方法
+
+* 一卡通余额查询
 
 ```
 <?php
 
-use zfjwsys\tools\Mytools;
+use zfjwxt\Ykt;
 
 class YourController extends Controller
 {
     public function yourfunction()
     {
-        $app = new Mytools();
+        $app = new Ykt($code, $pw, $url);
+        $balance = $app->getBalance();
         ...    
     }
 }
