@@ -1,22 +1,29 @@
 {
   "name": "guodaolinyi/zfjwxt",
-  "description":"基于PHP Curl 查询正方教务系统信息的类库",
+  "type": "library",
+  "description": "正方教务系统爬虫，自动识别验证码，实现课表、四六级成绩等教务系统数据查询功能。 ",
+  "keywords": [
+    "正方教务系统爬虫",
+    "正方教务系统",
+    "正方爬虫"
+  ],
   "authors": [
     {
       "name": "guodaolinyi",
       "email": "1397871454@qq.com"
     }
   ],
-  "license": "WTF",
-  "psr-4": {
-    "zfjwsys\\": "tools/"
-  },
+  "license": "Apache-2.0",
   "require": {
     "php": ">=5.6",
     "kurisu/captcha_reader": "1.0.3"
   },
-  "files": [
-    "function.php",
-    "config.php"
-  ]
+  "autoload": {
+    "psr-4": {
+      "zfjwxt\\": "src/"
+    },
+    "files": [
+      "src/function.php"
+    ]
+  }
 }
