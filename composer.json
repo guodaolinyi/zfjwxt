@@ -17,6 +17,8 @@
   "require": {
     "php": ">=5.6",
     "ext-gd": "*",
+    "ext-curl": "*",
+    "ext-dom": "*",
     "kurisu/captcha_reader": "1.0.4",
     "symfony/dom-crawler": "^5.3"
   },
