@@ -7,6 +7,8 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Promise;
 use Doctrine\Common\Cache\Cache;
 use Doctrine\Common\Cache\FilesystemCache;
+use Symfony\Component\CssSelector\CssSelectorConverter;
+use Symfony\Component\DomCrawler\Crawler;
 
 session_start();
 
@@ -25,47 +27,7 @@ class Zfjwxt
     // url
     protected $url;
 
-    //成绩查询uri
-    const ZF_GRADE_URI = 'xscjcx.aspx';
-
-    //考试查询uri
-    const ZF_EXAM_URI = 'xskscx.aspx';
-
-    //四六级成绩查询uri
-    const ZF_CET_URI = 'xsdjkscx.aspx';
-
-    //课表查询uri
-    const ZF_SCHEDULE_URI = 'xskbcx.aspx';
-
-    private $client;
-
-    private $base_uri; //The base_uri of your Academic Network Systems. Like 'http://xuanke.lzjtu.edu.cn/'
-
-    private $login_uri = 'default_ysdx.aspx';
-
-    private $main_page_uri = 'xs_main.aspx';
-
-    private $headers = [
-        'timeout' => 3.0,
-        'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36',
-        'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-        'Content-Type' => 'application/x-www-form-urlencoded'
-    ];
-
-    private $stu_id;
-
-    //private $password;
-
-    private $cacheCookie = false; // Is cookie cached
-
-    private $cache; //Doctrine\Common\Cache\Cache
-
-    private $cachePrefix = 'Lcrawl';
-
-    //The login post param
-    private $loginParam = [];
     // 验证码路径
-    const CheckCode = '/CheckCode.aspx';
     const CaptchaPath = __DIR__ . '/../runtime/captcha/';
 
     function __construct($username, $password, $url)
@@ -90,6 +52,7 @@ class Zfjwxt
             @unlink($imgPath);
             $this->viewstate = $this->viewstate();
         }
+        if (empty($this->name)) $this->name = $this->name();
         if (empty($this->viewstate)) exit(json_encode(['code' => 109, 'error' => '网络状态异常!']));
     }
 
@@ -142,7 +105,7 @@ class Zfjwxt
      */
     public function getName()
     {
-        return to_utf8($this->name());
+        return to_utf8($this->name);
     }
 
     /**
@@ -166,5 +129,32 @@ class Zfjwxt
             default:
                 return true;
         }
+    }
+
+    /**
+     * 获取本人信息
+     * @return array
+     */
+    public function getParserInfo()
+    {
+        $curlArg = [
+            'url' => $this->url . '/xsgrxx.aspx?xh=' . $this->studentcode . '&xm=' . $this->name,
+            'method' => 'post',
+            'responseHeaders' => 0,
+            'cookie' => $_SESSION['sessionId'],
+            'referer' => $this->url,
+        ];
+        $result = curl_request($curlArg);
+        $crawler = new Crawler($result);
+        return [
+            // 行政班
+            'class' => remove_brackets($crawler->filterXPath('//*[@id="lbl_xzb"]')->text()),
+            // 所在年级
+            'grade' => $crawler->filterXPath('//*[@id="lbl_dqszj"]')->text(),
+            // 专业名称
+            'major' => $crawler->filterXPath('//*[@id="lbl_zymc"]')->text(),
+            // 学院
+            'college' => $crawler->filterXPath('//*[@id="lbl_xy"]')->text()
+        ];
     }
 }

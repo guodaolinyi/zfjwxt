@@ -198,3 +198,16 @@ function to_gb2312($sArg = '')
     $str = iconv('utf-8', 'gb2312', $sArg);
     return $str;
 }
+
+if (!function_exists('remove_brackets')) {
+    /**
+     * 去掉中文括号
+     * @param $sArg
+     * @return array|string|string[]|null
+     */
+    function remove_brackets($sArg)
+    {
+        $str = preg_replace("/\(.*\)/", '', $sArg);
+        return preg_replace("/\（.*\）/", '', $str);
+    }
+}
