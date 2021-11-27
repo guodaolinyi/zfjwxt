@@ -198,11 +198,27 @@ if (!function_exists('table_to_array')) {
         $table = str_replace("</td>", "{td}", $table);
         // <br> 替换
         $table = str_replace("<br>", '{br}', $table);
+        //去掉 HTML 标记
+        $table = preg_replace("'<[/!]*?[^<>]*?>'si", "", $table);
         //去掉空白字符
         $table = preg_replace("'([rn])[s]+'", "", $table);
         $table = str_replace(" ", "", $table);
         $table = str_replace(" ", "", $table);
-        $table = explode('{tr}', $table);
+        $table = str_replace(PHP_EOL, '', $table);
+        $table = str_replace("\t", '', $table);
+        return explode('{tr}', $table);
+    }
+}
+
+if (!function_exists('format_schedule')) {
+    /**
+     * 课表格式化
+     * @param $table
+     * @return array
+     */
+    function format_schedule($table)
+    {
+        $table = table_to_array($table);
         unset($table[0]);
         unset($table[1]);
         array_pop($table);
@@ -219,6 +235,29 @@ if (!function_exists('table_to_array')) {
                 array_shift($td);
             }
             $td_array[] = $td;
+        }
+        return $td_array;
+    }
+}
+
+if (!function_exists('format_cet')) {
+    /**
+     * 获取CET成绩
+     * @param $table
+     * @return array
+     */
+    function format_cet($table)
+    {
+        dump($table);
+        $table = table_to_array($table);
+        dump($table);
+        $td_array = [];
+        foreach ($table as $key => $tr) {
+            $td = explode('{td}', $tr);
+            array_pop($td);
+            if (!empty($td)) {
+                $td_array[] = $td;
+            }
         }
         return $td_array;
     }
