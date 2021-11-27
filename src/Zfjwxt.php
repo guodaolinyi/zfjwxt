@@ -135,7 +135,7 @@ class Zfjwxt
      * 获取本人信息
      * @return array
      */
-    public function getParserInfo()
+    public function getPersonInfo()
     {
         $curlArg = [
             'url' => $this->url . '/xsgrxx.aspx?xh=' . $this->studentcode . '&xm=' . $this->name,
@@ -156,5 +156,39 @@ class Zfjwxt
             // 学院
             'college' => $crawler->filterXPath('//*[@id="lbl_xy"]')->text()
         ];
+    }
+
+    /**
+     * 获取班级课表
+     * @return array
+     */
+    public function getClassTable()
+    {
+        $curlArg = [
+            'url' => $this->url . '/tjkbcx.aspx?xh=' . $this->studentcode . '&xm=' . $this->name,
+            'method' => 'post',
+            'responseHeaders' => 0,
+            'cookie' => $_SESSION['sessionId'],
+            'referer' => $this->url,
+        ];
+        $result = curl_request($curlArg);
+        $crawler = new Crawler($result);
+        $table = $crawler->filterXPath('//*[@id="Table6"]')->html();
+        return table_to_array($table);
+    }
+
+    public function getPersonTable()
+    {
+        $curlArg = [
+            'url' => $this->url . '/xskbcx.aspx?xh=' . $this->studentcode . '&xm=' . $this->name,
+            'method' => 'post',
+            'responseHeaders' => 0,
+            'cookie' => $_SESSION['sessionId'],
+            'referer' => $this->url,
+        ];
+        $result = curl_request($curlArg);
+        $crawler = new Crawler($result);
+        $table = $crawler->filterXPath('//*[@id="Table1"]')->html();
+        return table_to_array($table);
     }
 }

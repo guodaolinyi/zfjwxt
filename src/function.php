@@ -182,3 +182,44 @@ if (!function_exists('remove_brackets')) {
         return preg_replace("/\（.*\）/", '', $str);
     }
 }
+
+if (!function_exists('table_to_array')) {
+    /**
+     * 表格数据转数组
+     * @param $table
+     * @return array
+     */
+    function table_to_array($table)
+    {
+        $table = preg_replace("'<table[^>]*?>'si", "", $table);
+        $table = preg_replace("'<tr[^>]*?>'si", "", $table);
+        $table = preg_replace("'<td[^>]*?>'si", "", $table);
+        $table = str_replace("</tr>", "{tr}", $table);
+        $table = str_replace("</td>", "{td}", $table);
+        // <br> 替换
+        $table = str_replace("<br>", '{br}', $table);
+        //去掉空白字符
+        $table = preg_replace("'([rn])[s]+'", "", $table);
+        $table = str_replace(" ", "", $table);
+        $table = str_replace(" ", "", $table);
+        $table = explode('{tr}', $table);
+        unset($table[0]);
+        unset($table[1]);
+        array_pop($table);
+        $td_array = [];
+        foreach ($table as $key => $tr) {
+            $td = explode('{td}', $tr);
+            // 每周大于7天删除无用元素
+            // 删除上午、下午
+            array_shift($td);
+            // 删除第几节课
+            array_pop($td);
+            // 删除多余元素
+            if (count($td) == 8) {
+                array_shift($td);
+            }
+            $td_array[] = $td;
+        }
+        return $td_array;
+    }
+}
