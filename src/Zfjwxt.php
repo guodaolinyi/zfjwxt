@@ -162,7 +162,7 @@ class Zfjwxt
      * 获取班级课表
      * @return array
      */
-    public function getClassTable()
+    public function getClassSchedule()
     {
         $curlArg = [
             'url' => $this->url . '/tjkbcx.aspx?xh=' . $this->studentcode . '&xm=' . $this->name,
@@ -174,10 +174,14 @@ class Zfjwxt
         $result = curl_request($curlArg);
         $crawler = new Crawler($result);
         $table = $crawler->filterXPath('//*[@id="Table6"]')->html();
-        return table_to_array($table);
+        return format_schedule($table);
     }
 
-    public function getPersonTable()
+    /**
+     * 获取个人课表
+     * @return array
+     */
+    public function getPersonSchedule()
     {
         $curlArg = [
             'url' => $this->url . '/xskbcx.aspx?xh=' . $this->studentcode . '&xm=' . $this->name,
@@ -189,6 +193,25 @@ class Zfjwxt
         $result = curl_request($curlArg);
         $crawler = new Crawler($result);
         $table = $crawler->filterXPath('//*[@id="Table1"]')->html();
-        return table_to_array($table);
+        return format_schedule($table);
+    }
+
+    /**
+     * 获取CET成绩
+     * @return array
+     */
+    public function getCET()
+    {
+        $curlArg = [
+            'url' => $this->url . '/xsdjkscx.aspx?xh=' . $this->studentcode . '&xm=' . $this->name,
+            'method' => 'post',
+            'responseHeaders' => 0,
+            'cookie' => $_SESSION['sessionId'],
+            'referer' => $this->url,
+        ];
+        $result = curl_request($curlArg);
+        $crawler = new Crawler($result);
+        $table = $crawler->filterXPath('//*[@id="DataGrid1"]')->html();
+        return format_cet($table);
     }
 }
