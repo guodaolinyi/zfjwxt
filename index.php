@@ -4,10 +4,33 @@ require 'vendor/autoload.php';
 
 use zfjwxt\Zfjwxt;
 
+/*
+202096094022
+20010130
+
+202184126018
+225118
+nh.970821
+
+202096084058
+qq1418115209
+
+202096094022
+xuzhe12345...
+
+202096104026
+sjl20010418
+
+201694064125
+sj19961204
+*/
+$stu_id = '201694064125';
+$password = 'sj19961204';
+
 $url = 'http://ems.bjwlxy.cn';
 
-$stu_id = $_GET['stu'];
-$password = $_GET['pw'];
+//$stu_id = $_GET['stu'];
+//$password = $_GET['pw'];
 $client = new Zfjwxt($stu_id, $password, $url);
 $name = $client->getName();
 dd($name);

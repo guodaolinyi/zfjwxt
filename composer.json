@@ -1,6 +1,6 @@
 {
   "name": "guodaolinyi/zfjwxt",
-  "type": "library",
+  "type": "project",
   "description": "正方教务系统爬虫，自动识别验证码，实现课表、四六级成绩等教务系统数据查询功能。 ",
   "keywords": [
     "正方教务系统爬虫",
@@ -13,7 +13,8 @@
       "email": "1397871454@qq.com"
     }
   ],
-  "license": "Apache-2.0",
+  "license": "MIT",
+  "minimum-stability": "stable",
   "require": {
     "php": ">=5.6",
     "ext-gd": "*",
