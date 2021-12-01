@@ -154,7 +154,21 @@ class Zfjwxt
             // 专业名称
             'major' => $crawler->filterXPath('//*[@id="lbl_zymc"]')->text(),
             // 学院
-            'college' => $crawler->filterXPath('//*[@id="lbl_xy"]')->text()
+            'college' => $crawler->filterXPath('//*[@id="lbl_xy"]')->text(),
+            // 出生日期
+            'birthday' => $crawler->filterXPath('//*[@id="lbl_csrq"]')->text(),
+            // 性别
+            'gender' => $crawler->filterXPath('//*[@id="lbl_xb"]')->text(),
+            // 姓名
+            'name' => $crawler->filterXPath('//*[@id="xm"]')->text(),
+            // 毕业中学
+            'high_school' => $crawler->filterXPath('//*[@id="byzx"]')->attr('value'),
+            // 民族
+            'nation' => $crawler->filterXPath('//*[@id="mz"]')->children()->first()->text(),
+            // 家庭所在地
+            'home_location' => $crawler->filterXPath('//*[@id="jtszd"]')->attr('value'),
+            // 政治面貌
+            'politics' => $crawler->filterXPath('//*[@id="zzmm"]')->children()->first()->text(),
         ];
     }
 
