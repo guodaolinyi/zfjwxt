@@ -24,15 +24,15 @@ sjl20010418
 201694064125
 sj19961204
 */
-$stu_id = '201694064125';
-$password = 'sj19961204';
+$stu_id = '202096104026';
+$password = 'sjl20010418';
 
 $url = 'http://ems.bjwlxy.cn';
 
 //$stu_id = $_GET['stu'];
 //$password = $_GET['pw'];
 $client = new Zfjwxt($stu_id, $password, $url);
-$name = $client->getName();
+$name = $client->getPersonInfo();
 dd($name);
 
 /**
