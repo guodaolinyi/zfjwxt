@@ -188,8 +188,7 @@ if (!function_exists('remove_brackets')) {
      */
     function remove_brackets($sArg)
     {
-        $str = preg_replace("/\(.*\)/", '', $sArg);
-        return preg_replace("/\（.*\）/", '', $str);
+        return preg_replace("/\(|\（.*\）|\)/", '', $sArg);
     }
 }
 
