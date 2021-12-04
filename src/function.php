@@ -5,6 +5,16 @@
  * Date: 2018-10-06
  * Time: 10:25
  */
+// 密码错误
+const PASSWORD_WRONG = 500;
+// 验证码错误
+const CAPTCHA_WRONG = 400;
+// 用户名不存在或未按时参加教学活动
+const UNABLE = 300;
+// 获取失败
+const FAIL = 100;
+// 成功
+const SUCCESS = 0;
 
 /**
  * curl_request() 函数用来进行远程 http 请求
@@ -260,5 +270,21 @@ if (!function_exists('format_cet')) {
             }
         }
         return $td_array;
+    }
+}
+
+if (!function_exists('result_arr')) {
+    /**
+     * 返回信息
+     * @param $code
+     * @param $msg
+     * @param false $data
+     */
+    function result_arr($code, $msg = false, $data = false)
+    {
+        $arr['code'] = $code;
+        if ($msg) $arr['msg'] = $msg;
+        if ($data) $arr['data'] = $data;
+        return $arr;
     }
 }

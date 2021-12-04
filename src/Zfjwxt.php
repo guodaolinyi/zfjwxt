@@ -186,9 +186,16 @@ class Zfjwxt
             'referer' => $this->url,
         ];
         $result = curl_request($curlArg);
+        if (!$result) {
+            return result_arr(FAIL);
+        }
         $crawler = new Crawler($result);
         $table = $crawler->filterXPath('//*[@id="Table6"]')->html();
-        return format_schedule($table);
+        $data['year'] = $crawler->filterXPath('//*[@id="xn"]')->children()->first()->text();
+        $data['semester'] = $crawler->filterXPath('//*[@id="xq"]')->children()->first()->text();
+        $data['grade'] = $crawler->filterXPath('//*[@id="nj"]')->children()->first()->text();
+        $data['schedule'] = format_schedule($table);
+        return result_arr(SUCCESS, '班级课表', $data);
     }
 
     /**
@@ -205,9 +212,15 @@ class Zfjwxt
             'referer' => $this->url,
         ];
         $result = curl_request($curlArg);
+        if (!$result) {
+            return result_arr(FAIL);
+        }
         $crawler = new Crawler($result);
         $table = $crawler->filterXPath('//*[@id="Table1"]')->html();
-        return format_schedule($table);
+        $data['year'] = $crawler->filterXPath('//*[@id="xnd"]')->children()->first()->text();
+        $data['semester'] = $crawler->filterXPath('//*[@id="xqd"]')->children()->first()->text();
+        $data['schedule'] = format_schedule($table);
+        return result_arr(SUCCESS, '个人课表', $data);
     }
 
     /**
