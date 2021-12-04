@@ -148,7 +148,7 @@ class Zfjwxt
         $crawler = new Crawler($result);
         return [
             // 行政班
-            'class' => remove_brackets($crawler->filterXPath('//*[@id="lbl_xzb"]')->text()),
+            'class' => $crawler->filterXPath('//*[@id="lbl_xzb"]')->text(),
             // 所在年级
             'grade' => $crawler->filterXPath('//*[@id="lbl_dqszj"]')->text(),
             // 专业名称
