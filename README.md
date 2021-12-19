@@ -90,7 +90,7 @@ class YourController extends Controller
 
 * 致开源组件作者
 
-关于爬虫自动登录部分的验证码识别，这里使用了"kurisu/captcha_reader"作为验证码识别工具，对于"kurisu"大佬表示衷心的感谢！
+关于爬虫自动登录部分的验证码识别，这里使用了"[kurisu/captcha_reader](https://github.com/kur-archive/CAPTCHA_Reader)" 作为验证码识别工具，对于"kurisu"大佬表示衷心的感谢！
 
 * 致小伙伴
 
