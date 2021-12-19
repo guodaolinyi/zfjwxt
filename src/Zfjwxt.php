@@ -237,9 +237,13 @@ class Zfjwxt
             'referer' => $this->url,
         ];
         $result = curl_request($curlArg);
+        if (!$result) {
+            return result_arr(FAIL);
+        }
         $crawler = new Crawler($result);
         $table = $crawler->filterXPath('//*[@id="DataGrid1"]')->html();
-        return format_cet($table);
+        $data = format_cet($table);
+        return result_arr(SUCCESS, 'CET成绩', $data);
     }
 
     /**

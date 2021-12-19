@@ -260,6 +260,7 @@ if (!function_exists('format_cet')) {
     {
         $table = table_to_array($table);
         $td_array = [];
+        array_shift($table);
         foreach ($table as $key => $tr) {
             $td = explode('{td}', $tr);
             array_pop($td);
