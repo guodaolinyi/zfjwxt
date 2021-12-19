@@ -215,6 +215,7 @@ if (!function_exists('table_to_array')) {
         $table = str_replace(" ", "", $table);
         $table = str_replace(PHP_EOL, '', $table);
         $table = str_replace("\t", '', $table);
+        $table = str_replace("\n", '', $table);
         return explode('{tr}', $table);
     }
 }
@@ -257,9 +258,7 @@ if (!function_exists('format_cet')) {
      */
     function format_cet($table)
     {
-        dump($table);
         $table = table_to_array($table);
-        dump($table);
         $td_array = [];
         foreach ($table as $key => $tr) {
             $td = explode('{td}', $tr);
@@ -271,13 +270,27 @@ if (!function_exists('format_cet')) {
         return $td_array;
     }
 }
-
+if (!function_exists('format_score')) {
+    function format_score($table)
+    {
+        $table = table_to_array($table);
+        $td_array = [];
+        array_shift($table);
+        array_pop($table);
+        foreach ($table as $key => $tr) {
+            $td = explode('{td}', $tr);
+            $td_array[] = $td;
+        }
+        return $td_array;
+    }
+}
 if (!function_exists('result_arr')) {
     /**
      * 返回信息
      * @param $code
      * @param $msg
      * @param false $data
+     * @return array
      */
     function result_arr($code, $msg = false, $data = false)
     {

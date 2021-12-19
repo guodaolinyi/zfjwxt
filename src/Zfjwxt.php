@@ -191,9 +191,9 @@ class Zfjwxt
         }
         $crawler = new Crawler($result);
         $table = $crawler->filterXPath('//*[@id="Table6"]')->html();
-        $data['year'] = $crawler->filterXPath('//*[@id="xn"]')->children()->first()->text();
-        $data['semester'] = $crawler->filterXPath('//*[@id="xq"]')->children()->first()->text();
-        $data['grade'] = $crawler->filterXPath('//*[@id="nj"]')->children()->first()->text();
+        $data['year'] = $crawler->filterXPath('//select[@id="xn"]/option[@selected="selected"]')->text();
+        $data['semester'] = $crawler->filterXPath('//select[@id="xq"]/option[@selected="selected"]')->text();
+        $data['grade'] = $crawler->filterXPath('//select[@id="nj"]/option[@selected="selected"]')->text();
         $data['schedule'] = format_schedule($table);
         return result_arr(SUCCESS, '班级课表', $data);
     }
@@ -240,5 +240,50 @@ class Zfjwxt
         $crawler = new Crawler($result);
         $table = $crawler->filterXPath('//*[@id="DataGrid1"]')->html();
         return format_cet($table);
+    }
+
+    /**
+     * 获取历年成绩
+     * @return array
+     */
+    public function getScore()
+    {
+        // viewstate值发生了变化 需要重新获取viewstate
+        $curlArg = array(
+            'url' => $this->url . '/xscjcx.aspx?xh=' . $this->studentcode . '&xm=' . $this->name . '&gnmkdm=N121605',
+            'method' => 'get',
+            'responseHeaders' => 0,
+            'cookie' => $_SESSION['sessionId'],
+            'referer' => $this->url,
+        );
+        $result = curl_request($curlArg);
+        preg_match_all('/name="__VIEWSTATE" value="(.*)"/', $result, $match);  //唯一识别码
+        $viewstate = $match[1][0];
+        $aArg = [
+            '__VIEWSTATE' => $viewstate,
+            '__EVENTARGET' => '',
+            '__EVENTARGUMENT' => '',
+            'hidLanguage' => '',
+            'ddlXN' => '',
+            'ddlXQ' => '',
+            'ddl_kcxz' => '',
+            'btn_zcj' => '%C0%FA%C4%EA%B3%C9%BC%A8'
+        ];
+        $curlArg = [
+            'url' => $this->url . '/xscjcx.aspx?xh=' . $this->studentcode . '&xm=' . $this->name,
+            'method' => 'post',
+            'responseHeaders' => 0,
+            'data' => $aArg,
+            'cookie' => $_SESSION['sessionId'],
+            'referer' => $this->url,
+        ];
+        $result = curl_request($curlArg);
+        if (!$result) {
+            return result_arr(FAIL);
+        }
+        $crawler = new Crawler($result);
+        $table = $crawler->filterXPath('//*[@id="Datagrid1"]')->html();
+        $data = format_score($table);
+        return result_arr(SUCCESS, '历年成绩', $data);
     }
 }
