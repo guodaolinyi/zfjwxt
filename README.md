@@ -28,7 +28,7 @@
 | 挂失 | 计划中 | |
 | 流水查询 | 计划中 |
 
-* 教务系统
+* 教务系统（学生端）
 
 | 功能 | 进度 | 方法 | 备注 |
 |---|---|---|---|
@@ -38,7 +38,14 @@
 | 个人课表查询（含选修） | 完成 | getPersonSchedule |
 | 四六级成绩查询 | 完成 | getCET |
 | 成绩查询（历年成绩查询） | 完成 | getScore |
-| 教室课表查询（为了实现空教室查询） | 计划中 |
+| ~~教室课表查询（为了实现空教室查询）~~ | 放弃 | | 发现教师端有现成功能 |
+| 成绩统计查询 | 完成 |getStatistic | |
+
+* 教务系统（教师端）
+
+| 功能 | 进度 | 方法 | 备注 |
+|---|---|---|---|
+| 教室课表查询（为了实现空教室查询） | 计划中 | |  |
 
 ##### 使用方法
 
@@ -90,7 +97,8 @@ class YourController extends Controller
 
 * 致开源组件作者
 
-关于爬虫自动登录部分的验证码识别，这里使用了"[kurisu/captcha_reader](https://github.com/kur-archive/CAPTCHA_Reader)" 作为验证码识别工具，对于"kurisu"大佬表示衷心的感谢！
+关于爬虫自动登录部分的验证码识别，这里使用了"[kurisu/captcha_reader](https://github.com/kur-archive/CAPTCHA_Reader)" 作为验证码识别工具，对于"kurisu"
+大佬表示衷心的感谢！
 
 * 致小伙伴
 

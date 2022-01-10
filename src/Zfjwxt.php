@@ -290,4 +290,57 @@ class Zfjwxt
         $data = format_score($table);
         return result_arr(SUCCESS, '历年成绩', $data);
     }
+
+    /**
+     * 获取成绩统计
+     * @return array
+     */
+    public function getStatistic()
+    {
+        $curlArg = array(
+            'url' => $this->url . '/xscjcx.aspx?xh=' . $this->studentcode . '&xm=' . $this->name . '&gnmkdm=N121605',
+            'method' => 'get',
+            'responseHeaders' => 0,
+            'cookie' => $_SESSION['sessionId'],
+            'referer' => $this->url,
+        );
+        $result = curl_request($curlArg);
+        preg_match_all('/name="__VIEWSTATE" value="(.*)"/', $result, $match);  //唯一识别码
+        $viewstate = $match[1][0];
+        $aArg = [
+            '__VIEWSTATE' => $viewstate,
+            '__EVENTARGET' => '',
+            '__EVENTARGUMENT' => '',
+            'hidLanguage' => '',
+            'ddlXN' => '',
+            'ddlXQ' => '',
+            'ddl_kcxz' => '',
+            'Button1' => '%B3%C9%BC%A8%CD%B3%BC%C6'
+        ];
+        $curlArg = [
+            'url' => $this->url . '/xscjcx.aspx?xh=' . $this->studentcode . '&xm=' . $this->name,
+            'method' => 'post',
+            'responseHeaders' => 0,
+            'data' => $aArg,
+            'cookie' => $_SESSION['sessionId'],
+            'referer' => $this->url,
+        ];
+        $result = curl_request($curlArg);
+        if (!$result) {
+            return result_arr(FAIL);
+        }
+        $crawler = new Crawler($result);
+        $data['sketch'] = $crawler->filterXPath('//*[@id="xftj"]')->children()->text();
+        $nature = $crawler->filterXPath('//*[@id="Datagrid2"]')->html();
+        $data['nature'] = format_statistic($nature);
+        $ascription = $crawler->filterXPath('//*[@id="DataGrid6"]')->html();
+        $data['ascription'] = format_statistic($ascription);
+        // 专业总人数
+        $data['total']['major'] = $crawler->filterXPath('//*[@id="zyzrs"]')->children()->text();
+        // 平均绩点
+        $data['total']['gpa'] = $crawler->filterXPath('//*[@id="pjxfjd"]')->children()->text();
+        // 学分绩点总和
+        $data['total']['credit'] = $crawler->filterXPath('//*[@id="xfjdzh"]')->children()->text();
+        return result_arr(SUCCESS, '历年成绩', $data);
+    }
 }

@@ -272,6 +272,11 @@ if (!function_exists('format_cet')) {
     }
 }
 if (!function_exists('format_score')) {
+    /**
+     * 格式化成绩
+     * @param $table
+     * @return array
+     */
     function format_score($table)
     {
         $table = table_to_array($table);
@@ -280,6 +285,26 @@ if (!function_exists('format_score')) {
         array_pop($table);
         foreach ($table as $key => $tr) {
             $td = explode('{td}', $tr);
+            $td_array[] = $td;
+        }
+        return $td_array;
+    }
+}
+if (!function_exists('format_statistic')) {
+    /**
+     * 格式化成绩
+     * @param $table
+     * @return array
+     */
+    function format_statistic($table)
+    {
+        $table = table_to_array($table);
+        $td_array = [];
+        array_shift($table);
+        array_pop($table);
+        foreach ($table as $key => $tr) {
+            $td = explode('{td}', $tr);
+            array_pop($td);
             $td_array[] = $td;
         }
         return $td_array;
