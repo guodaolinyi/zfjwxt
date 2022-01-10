@@ -341,6 +341,6 @@ class Zfjwxt
         $data['total']['gpa'] = $crawler->filterXPath('//*[@id="pjxfjd"]')->children()->text();
         // 学分绩点总和
         $data['total']['credit'] = $crawler->filterXPath('//*[@id="xfjdzh"]')->children()->text();
-        return result_arr(SUCCESS, '历年成绩', $data);
+        return result_arr(SUCCESS, '成绩统计', $data);
     }
 }
