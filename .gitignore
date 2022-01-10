@@ -2,3 +2,4 @@
 .htaccess
 nginx.htaccess
 composer.lock
+vendor
